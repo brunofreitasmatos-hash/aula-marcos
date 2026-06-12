@@ -3,84 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minha Página Inicial</title>
-    <style>
-        /* Estilos básicos para deixar a página organizada */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-            color: #333;
-            line-height: 1.6;
-        }
-        header {
-            background-color: #007BFF;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        nav {
-            display: flex;
-            justify-content: center;
-            background: #333;
-        }
-        nav a {
-            color: white;
-            padding: 14px 20px;
-            text-decoration: none;
-            text-align: center;
-        }
-        nav a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-        main {
-            padding: 20px;
-            max-width: 800px;
-            margin: auto;
-            background: white;
-            margin-top: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        footer {
-            text-align: center;
-            padding: 20px;
-            margin-top: 20px;
-            background: #333;
-            color: white;
-        }
-    </style>
+    <title>AgroTech - Painel de Controle</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
-        <h1>Bem-vindo ao Meu Site</h1>
-        <p>Este é o arquivo index.html principal.</p>
-    </header>
-
-    <nav>
-        <a href="#">Início</a>
-        <a href="#">Sobre</a>
-        <a href="#">Contato</a>
-    </nav>
-
-    <main>
-        <h2>Sobre esta página</h2>
-        <p>O arquivo <code>index.html</code> serve como a porta de entrada do seu site. Quando alguém digita o seu domínio no navegador, este é o primeiro arquivo que o servidor procura e renderiza.</p>
+    <div class="dashboard-container">
         
-        <h3>Próximos Passos:</h3>
-        <ul>
-            <li>Altere os textos do cabeçalho e do conteúdo.</li>
-            <li>Adicione novas seções dentro da tag <code>&lt;main&gt;</code>.</li>
-            <li>Crie outras páginas (como <code>sobre.html</code>) e conecte-as no menu de navegação.</li>
-        </ul>
-    </main>
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>AgroTech 🌾</h2>
+            </div>
+            <nav class="menu">
+                <a href="#" class="active">📊 Painel Principal</a>
+                <a href="#">🌱 Minhas Lavouras</a>
+                <a href="#">⚙️ Configurações</a>
+            </nav>
+            <div class="sidebar-footer">
+                <p>Agrinho 2026</p>
+            </div>
+        </aside>
 
-    <footer>
-        <p>&copy; 2026 - Todos os direitos reservados.</p>
-    </footer>
+        <main class="main-content">
+            <header class="top-header">
+                <div>
+                    <h1>Painel de Monitoramento</h1>
+                    <p>Gestão inteligente para o pequeno e médio produtor</p>
+                </div>
+                <div class="user-profile">
+                    <span>Produtor Ativo</span>
+                </div>
+            </header>
 
+            <section class="grid-cards">
+                
+                <div class="card" id="card-umidade">
+                    <div class="card-icon">💧</div>
+                    <h3>Umidade do Solo</h3>
+                    <div class="valor" id="val-umidade">45%</div>
+                    <p class="status" id="status-umidade">Status: Ideal</p>
+                </div>
+
+                <div class="card" id="card-temp">
+                    <div class="card-icon">🌡️</div>
+                    <h3>Temperatura</h3>
+                    <div class="valor" id="val-temp">28°C</div>
+                    <p class="status">Status: Normal</p>
+                </div>
+
+                <div class="card card-acao">
+                    <div class="card-icon">⚙️</div>
+                    <h3>Irrigação Automatizada</h3>
+                    <p>Gerencie o fluxo de água dos pulverizadores em tempo real.</p>
+                    <button class="btn-primary" id="btn-regar">Ativar Irrigação</button>
+                </div>
+
+            </section>
+
+            <section class="log-section">
+                <h3>📋 Registro de Eventos Recentes</h3>
+                <ul class="log-list" id="lista-logs">
+                    <li>
+                        <span class="log-msg">[Sistema] Sensores conectados e operando normalmente.</span>
+                        <span class="log-time">Agora mesmo</span>
+                    </li>
+                </ul>
+            </section>
+        </main>
+
+    </div>
+
+    <script>
+        const valUmidade = document.getElementById('val-umidade');
+        const cardUmidade = document.getElementById('card-umidade');
+        const statusUmidade = document.getElementById('status-umidade');
+        const btnRegar = document.getElementById('btn-regar');
+        const listaLogs = document.getElementById('lista-logs');
+
+        // Simulação de alteração de dados via sensores (Front-end dinâmico)
+        setInterval(() => {
+            const novaUmidade = Math.floor(Math.random() * (80 - 20 + 1)) + 20;
+            valUmidade.innerText = novaUmidade + "%";
+
+            if (novaUmidade < 35) {
+                cardUmidade.classList.add('alerta');
+                statusUmidade.innerText = "Status: Crítico - Solo Seco!";
+            } else {
+                cardUmidade.classList.remove('alerta');
+                statusUmidade.innerText = "Status: Ideal";
+            }
+        }, 5000);
+
+        // Ação do botão
+        btnRegar.addEventListener('click', () => {
+            valUmidade.innerText = "72%";
+            cardUmidade.classList.remove('alerta');
+            statusUmidade.innerText = "Status: Irrigando...";
+
+            const novoLog = document.createElement('li');
+            const horaAtual = new Date().toLocaleTimeString();
+            novoLog.innerHTML = `<span class="log-msg">[Manual] Comando de irrigação disparado pelo usuário.</span> <span class="log-time">${horaAtual}</span>`;
+            
+            listaLogs.insertBefore(novoLog, listaLogs.firstChild);
+        });
+    </script>
 </body>
 </html>
